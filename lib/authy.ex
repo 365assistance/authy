@@ -26,6 +26,23 @@ defmodule Authy do
     |> URI.to_string
   end
 
+  @doc """
+  Forces headers to application/json for all requests
+
+  iex> Authy.process_request_headers([{"Content-Type", "application/xml"}])
+  [{"Accept", "application/json"}, {"Content-Type", "application/json"}]
+
+  iex> Authy.process_request_headers([{"User-Agent", "HTTPoison"}])
+  [{"Accept", "application/json"}, {"Content-Type", "application/json"}, {"User-Agent", "HTTPoison"}]
+  """
+  def process_request_headers(headers) do
+    headers
+    |> Enum.into(%{})
+    |> Map.put("Content-Type", "application/json")
+    |> Map.put("Accept", "application/json")
+    |> Enum.into([])
+  end
+
   defp api_key do
     Application.get_env(:authy, :api_key)
   end
