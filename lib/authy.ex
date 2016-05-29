@@ -1,0 +1,2 @@
+defmodule Authy do
+end
