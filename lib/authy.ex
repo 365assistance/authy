@@ -43,6 +43,24 @@ defmodule Authy do
     |> Enum.into([])
   end
 
+  @doc """
+  Encode request body to JSON when specified as a Map
+  """
+  def process_request_body(body = %{}) do
+    body |> Poison.encode!
+  end
+
+  def process_request_body(body) do
+    body
+  end
+
+  @doc """
+  Decode response body JSON
+  """
+  def process_response_body(body) do
+    body |> Poison.decode!
+  end
+
   defp api_key do
     Application.get_env(:authy, :api_key)
   end
