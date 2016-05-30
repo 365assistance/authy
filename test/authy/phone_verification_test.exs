@@ -20,4 +20,16 @@ defmodule Authy.PhoneVerificationTest do
     assert_params = fn (p) -> assert p == %{via: "sms", phone_number: "0477777777", country_code: "61"} end
     start(params, assert_params)
   end
+
+  test "check calls get_fn with given params" do
+    params = %{phone_number: "0477777777", country_code: "44", verification_code: "BLAH"}
+    assert_params = fn (p) -> assert p == params end
+    check(params, assert_params)
+  end
+
+  test "check pulls default country_code from settings" do
+    params = %{phone_number: "0477777777", verification_code: "BLAH"}
+    assert_params = fn (p) -> assert p == %{phone_number: "0477777777", country_code: "61", verification_code: "BLAH"} end
+    check(params, assert_params)
+  end
 end

@@ -39,6 +39,26 @@ defmodule Authy.PhoneVerification do
     Authy.post(@base_url <> "/start", params)
   end
 
+  @doc """
+  Check the validity of a verification token
+
+  params map must include :phone_number and :verification_code
+  :country_code is also required but may be specified in config
+
+  get_fn replaces the actual call to Authy.get
+  """
+  def check(params, get_fn \\ &get_check/1)
+  def check(params = %{phone_number: _, verification_code: _}, get_fn) do
+    params
+    |> set_defaults
+    |> Map.take([:phone_number, :country_code, :verification_code])
+    |> get_fn.()
+  end
+
+  defp get_check(params = %{phone_number: _, country_code: _, verification_code: _}) do
+    Authy.get(@base_url <> "/check", [], params: params)
+  end
+
   defp set_defaults(params) do
     Application.get_env(:authy, :phone_verification, [])
     |> Dict.take([:via, :country_code, :locale, :custom_message])
