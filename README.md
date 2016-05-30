@@ -1,4 +1,5 @@
 # Authy
+[![Build status](https://badge.buildkite.com/a4d73c8458b58f04fdb5af7e7179d242b872aef8f61577415f.svg)](https://buildkite.com/365-assistance-pty-ltd/authy)
 
 Elixir library access to the Authy API, based loosely on the [ruby gem](https://github.com/authy/authy-ruby).
 
