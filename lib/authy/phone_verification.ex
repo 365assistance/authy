@@ -36,7 +36,7 @@ defmodule Authy.PhoneVerification do
   end
 
   defp post_start(params = %{via: via, phone_number: _, country_code: _}) when via in [:sms, "sms", :call, "call"] do
-    Authy.post(@base_url <> "/start", params)
+    Authy.post!(@base_url <> "/start", params) |> Map.from_struct
   end
 
   @doc """
@@ -56,7 +56,7 @@ defmodule Authy.PhoneVerification do
   end
 
   defp get_check(params = %{phone_number: _, country_code: _, verification_code: _}) do
-    Authy.get(@base_url <> "/check", [], params: params)
+    Authy.get!(@base_url <> "/check", [], params: params) |> Map.from_struct
   end
 
   defp set_defaults(params) do
