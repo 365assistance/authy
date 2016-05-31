@@ -16,6 +16,7 @@ defmodule Authy.PhoneVerification do
   ```
   """
 
+  import Authy.Helpers, only: [parse_response: 1]
   @base_url "/protected/json/phones/verification"
 
   @doc """
@@ -36,7 +37,7 @@ defmodule Authy.PhoneVerification do
   end
 
   defp post_start(params = %{via: via, phone_number: _, country_code: _}) when via in [:sms, "sms", :call, "call"] do
-    Authy.post!(@base_url <> "/start", params) |> Map.from_struct
+    Authy.post!(@base_url <> "/start", params) |> parse_response
   end
 
   @doc """
@@ -56,7 +57,7 @@ defmodule Authy.PhoneVerification do
   end
 
   defp get_check(params = %{phone_number: _, country_code: _, verification_code: _}) do
-    Authy.get!(@base_url <> "/check", [], params: params) |> Map.from_struct
+    Authy.get!(@base_url <> "/check", [], params: params) |> parse_response
   end
 
   defp set_defaults(params) do
