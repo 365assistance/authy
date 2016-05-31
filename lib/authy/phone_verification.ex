@@ -28,6 +28,7 @@ defmodule Authy.PhoneVerification do
 
   post_fn replaces the actual call to Authy.post
   """
+  @spec start(map, (map -> Authy.response)) :: Authy.response
   def start(params, post_fn \\ &post_start/1)
   def start(params = %{phone_number: _}, post_fn) do
     params
@@ -36,6 +37,7 @@ defmodule Authy.PhoneVerification do
     |> post_fn.()
   end
 
+  @spec post_start(map) :: Authy.response
   defp post_start(params = %{via: via, phone_number: _, country_code: _}) when via in [:sms, "sms", :call, "call"] do
     Authy.post!(@base_url <> "/start", params) |> parse_response
   end
@@ -48,6 +50,7 @@ defmodule Authy.PhoneVerification do
 
   get_fn replaces the actual call to Authy.get
   """
+  @spec check(map, (map -> Authy.response)) :: Authy.response
   def check(params, get_fn \\ &get_check/1)
   def check(params = %{phone_number: _, verification_code: _}, get_fn) do
     params
@@ -56,6 +59,7 @@ defmodule Authy.PhoneVerification do
     |> get_fn.()
   end
 
+  @spec get_check(map) :: Authy.response
   defp get_check(params = %{phone_number: _, country_code: _, verification_code: _}) do
     Authy.get!(@base_url <> "/check", [], params: params) |> parse_response
   end
