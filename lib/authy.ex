@@ -4,6 +4,8 @@ defmodule Authy do
 
   See https://docs.authy.com/api_docs.html
   """
+  @behaviour Authy.HTTPClient
+
   use HTTPoison.Base
   @base_uri %{scheme: "https", authority: nil, host: "api.authy.com", port: 443}
   @type response :: {:ok, binary} | {:error, binary}
