@@ -2,34 +2,25 @@ defmodule Authy.PhoneVerificationTest do
   use ExUnit.Case, async: false
   import Authy.PhoneVerification
 
-  setup_all do
-    defaults = [via: "sms", country_code: "61"]
-    Application.put_env(:authy, :phone_verification, defaults)
-    on_exit fn -> Application.delete_env(:authy, :phone_verification) end
-    :ok
-  end
-
-  test "start calls post_fn with given params" do
+  test "start calls HTTPClient.post! with given params" do
     params = %{via: "call", phone_number: "0477777777", country_code: "44"}
-    assert_params = fn (p) -> assert p == params end
-    start(params, assert_params)
+    start(params)
+    assert_receive {:post!, _, ^params, _, _}
   end
 
   test "start pulls defaults from settings" do
-    params = %{phone_number: "0477777777"}
-    assert_params = fn (p) -> assert p == %{via: "sms", phone_number: "0477777777", country_code: "61"} end
-    start(params, assert_params)
+    start(%{phone_number: "0477777777"})
+    assert_receive {:post!, _, %{via: :sms, phone_number: "0477777777", country_code: 61}, _, _}
   end
 
-  test "check calls get_fn with given params" do
+  test "check calls HTTPClient.get! with given params" do
     params = %{phone_number: "0477777777", country_code: "44", verification_code: "BLAH"}
-    assert_params = fn (p) -> assert p == params end
-    check(params, assert_params)
+    check(params)
+    assert_receive {:get!, _, _, [params: ^params]}
   end
 
   test "check pulls default country_code from settings" do
-    params = %{phone_number: "0477777777", verification_code: "BLAH"}
-    assert_params = fn (p) -> assert p == %{phone_number: "0477777777", country_code: "61", verification_code: "BLAH"} end
-    check(params, assert_params)
+    check(%{phone_number: "0477777777", verification_code: "BLAH"})
+    assert_receive {:get!, _, _, [params: %{phone_number: "0477777777", country_code: 61, verification_code: "BLAH"}]}
   end
 end
