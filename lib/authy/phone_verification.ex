@@ -15,6 +15,8 @@ defmodule Authy.PhoneVerification do
       custom_message: "Verification code, yo!"]
   ```
   """
+  @callback start(map) :: Authy.response
+  @callback check(map) :: Authy.response
 
   import Authy.Helpers, only: [parse_response: 1]
   @base_url "/protected/json/phones/verification"
