@@ -5,3 +5,5 @@ config :authy,
   phone_verification: [
     via: :sms,
     country_code: 61]
+
+import_config "#{Mix.env}.exs"
