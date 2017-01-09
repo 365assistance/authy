@@ -59,8 +59,8 @@ defmodule Authy.PhoneVerification do
 
   defp set_defaults(params) do
     Application.get_env(:authy, :phone_verification, [])
-    |> Dict.take([:via, :country_code, :locale, :custom_message])
-    |> Dict.merge(params)
     |> Enum.into(%{})
+    |> Map.take([:via, :country_code, :locale, :custom_message])
+    |> Map.merge(params)
   end
 end
