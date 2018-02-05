@@ -4,7 +4,7 @@ defmodule Authy.Mixfile do
   def project do
     [app: :authy,
      version: "0.2.1",
-     elixir: "~> 1.2",
+     elixir: "~> 1.6.1",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
      deps: deps()]
@@ -15,7 +15,7 @@ defmodule Authy.Mixfile do
   end
 
   defp deps do
-    [{:httpoison, "~> 0.11.0"},
-     {:poison, "~> 2.1"}]
+    [{:httpoison, "~> 1.0"},
+     {:poison, "~> 3.1"}]
   end
 end
