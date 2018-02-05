@@ -1,5 +1,5 @@
 defmodule Authy do
-  @defmodule """
+  @moduledoc """
   Client for the Authy HTTP API
 
   See https://docs.authy.com/api_docs.html
@@ -72,7 +72,7 @@ defmodule Authy do
   defp add_api_key(query) do
     query
     |> URI.decode_query
-    |> Map.put("api_key", api_key)
+    |> Map.put("api_key", api_key())
     |> URI.encode_query
   end
 end
