@@ -21,6 +21,14 @@ defmodule Authy.PhoneVerificationTest do
 
   test "check pulls default country_code from settings" do
     check(%{phone_number: "0477777777", verification_code: "BLAH"})
-    assert_receive {:get!, _, _, [params: %{phone_number: "0477777777", country_code: 61, verification_code: "BLAH"}]}
+
+    assert_receive {:get!, _, _,
+                    [
+                      params: %{
+                        phone_number: "0477777777",
+                        country_code: 61,
+                        verification_code: "BLAH"
+                      }
+                    ]}
   end
 end

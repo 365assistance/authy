@@ -1,5 +1,5 @@
 defmodule Authy do
-  @defmodule """
+  @moduledoc """
   Client for the Authy HTTP API
 
   See https://docs.authy.com/api_docs.html
@@ -26,7 +26,7 @@ defmodule Authy do
     URI.parse(url)
     |> Map.merge(@base_uri)
     |> Map.update!(:query, &add_api_key/1)
-    |> URI.to_string
+    |> URI.to_string()
   end
 
   @doc """
@@ -50,7 +50,7 @@ defmodule Authy do
   Encode request body to JSON when specified as a Map
   """
   def process_request_body(body = %{}) do
-    body |> Poison.encode!
+    body |> Poison.encode!()
   end
 
   def process_request_body(body) do
@@ -61,7 +61,7 @@ defmodule Authy do
   Decode response body JSON
   """
   def process_response_body(body) do
-    body |> Poison.decode!
+    body |> Poison.decode!()
   end
 
   defp api_key do
@@ -69,10 +69,11 @@ defmodule Authy do
   end
 
   defp add_api_key(nil), do: add_api_key("")
+
   defp add_api_key(query) do
     query
-    |> URI.decode_query
-    |> Map.put("api_key", api_key)
-    |> URI.encode_query
+    |> URI.decode_query()
+    |> Map.put("api_key", api_key())
+    |> URI.encode_query()
   end
 end

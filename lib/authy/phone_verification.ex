@@ -15,8 +15,8 @@ defmodule Authy.PhoneVerification do
       custom_message: "Verification code, yo!"]
   ```
   """
-  @callback start(map) :: Authy.response
-  @callback check(map) :: Authy.response
+  @callback start(map) :: Authy.response()
+  @callback check(map) :: Authy.response()
 
   import Authy.Helpers, only: [parse_response: 1]
   @base_url "/protected/json/phones/verification"
@@ -36,7 +36,8 @@ defmodule Authy.PhoneVerification do
     |> post_start
   end
 
-  defp post_start(params = %{via: via, phone_number: _, country_code: _}) when via in [:sms, "sms", :call, "call"] do
+  defp post_start(params = %{via: via, phone_number: _, country_code: _})
+       when via in [:sms, "sms", :call, "call"] do
     @http_client.post!(@base_url <> "/start", params) |> parse_response
   end
 
