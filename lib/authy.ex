@@ -8,7 +8,6 @@ defmodule Authy do
 
   use HTTPoison.Base
   @base_uri %{scheme: "https", authority: nil, host: "api.authy.com", port: 443}
-  @type response :: {:ok, binary} | {:error, binary}
 
   @doc """
   Sets the correct base url and correct API key in the query string
