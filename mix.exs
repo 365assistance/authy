@@ -17,6 +17,6 @@ defmodule Authy.Mixfile do
   end
 
   defp deps do
-    [{:httpoison, "~> 1.0"}, {:poison, "~> 3.1"}]
+    [{:httpoison, "~> 1.4"}, {:poison, "~> 3.1"}]
   end
 end
